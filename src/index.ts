@@ -4,7 +4,7 @@ import geoLocateIP from './geo';
 import Cache, { CacheInfo, CacheInterface } from './cache';
 import { FeatureCollection, Point, point } from '@turf/helpers';
 
-export type CacheMap = [{ loc: [number, number]; cache: CacheInfo }];
+export type CacheMap = { loc: [number, number]; cache: CacheInfo }[];
 
 class DistributedLRUCache {
   private regions: FeatureCollection<Point>;

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import axiosRetry from 'axios-retry';
 
 export interface CacheInterface {
@@ -14,9 +14,16 @@ export type CacheInfo = {
 
 class Cache implements CacheInterface {
   private readonly axios: AxiosInstance;
+  readonly info: CacheInfo;
 
   constructor(info: CacheInfo) {
-    this.axios = axios.create({ baseURL: `${info.host}:${info.port}/`, timeout: 1000 });
+    this.info = info;
+    // Sanitize baseUrl
+    const baseURL =
+      info.host.startsWith('http://') || info.host.startsWith('https://')
+        ? `${info.host}:${info.port}`
+        : `http://${info.host}:${info.port}`;
+    this.axios = axios.create({ baseURL, timeout: 1000 });
     axiosRetry(this.axios, { retries: 3 });
   }
 
@@ -25,7 +32,8 @@ class Cache implements CacheInterface {
       await this.axios.delete(`${key}`);
       return true;
     } catch (err) {
-      console.error(err);
+      const axiosErr = err as AxiosError;
+      console.error('Failed to delete: ' + axiosErr.message);
       return false;
     }
   }
@@ -36,7 +44,8 @@ class Cache implements CacheInterface {
       const { value } = result.data;
       return value;
     } catch (err) {
-      console.error(err);
+      const axiosErr = err as AxiosError;
+      console.error('Failed to delete: ' + axiosErr.message);
       return null;
     }
   }
@@ -46,7 +55,8 @@ class Cache implements CacheInterface {
       await this.axios.post(`${key}`, { value, ttl });
       return true;
     } catch (err) {
-      console.error(err);
+      const axiosErr = err as AxiosError;
+      console.error('Failed to delete: ' + axiosErr.message);
       return false;
     }
   }

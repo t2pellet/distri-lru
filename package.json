@@ -1,6 +1,6 @@
 {
   "name": "distri-lru",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "engines": {
     "node": "16.x"
   },
