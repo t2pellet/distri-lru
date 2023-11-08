@@ -4,12 +4,12 @@ import geoLocateIP from './geo';
 import Cache, { CacheInfo, CacheInterface } from './cache';
 import { FeatureCollection, Point, point } from '@turf/helpers';
 
-export type RedisMap = [{ loc: [number, number]; cache: CacheInfo }];
+export type CacheMap = [{ loc: [number, number]; cache: CacheInfo }];
 
 class DistributedLRUCache {
   private regions: FeatureCollection<Point>;
 
-  constructor(redisMap: RedisMap) {
+  constructor(redisMap: CacheMap) {
     this.regions = {
       type: 'FeatureCollection',
       features: [...redisMap.map(({ loc, cache }) => point(loc, { cache }))],
