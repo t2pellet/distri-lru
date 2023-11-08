@@ -130,3 +130,14 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+/.idea/.gitignore
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/conventionalCommit.xml
+/.idea/distri-lru.iml
+/.idea/jsLinters/eslint.xml
+/.idea/jsLibraryMappings.xml
+/.idea/modules.xml
+/.idea/prettier.xml
+/.idea/codeStyles/Project.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml
